@@ -1,23 +1,21 @@
 package com.mojang.ld22;
 
 import java.applet.Applet;
-import java.awt.BorderLayout;
+import java.awt.*;
 
 public class GameApplet extends Applet {
-	private static final long serialVersionUID = 1L;
+    private final Game game = new Game();
 
-	private Game game = new Game();
+    public void init() {
+        setLayout(new BorderLayout());
+        add(game, BorderLayout.CENTER);
+    }
 
-	public void init() {
-		setLayout(new BorderLayout());
-		add(game, BorderLayout.CENTER);
-	}
+    public void start() {
+        game.start();
+    }
 
-	public void start() {
-		game.start();
-	}
-
-	public void stop() {
-		game.stop();
-	}
+    public void stop() {
+        game.stop();
+    }
 }
