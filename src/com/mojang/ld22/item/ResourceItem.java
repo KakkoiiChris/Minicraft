@@ -35,9 +35,13 @@ public class ResourceItem extends Item {
 
     public void renderInventory(Screen screen, int x, int y) {
         screen.render(x, y, resource.sprite, resource.color, 0);
+
         Font.draw(resource.name, screen, x + 32, y, Color.get(-1, 555, 555, 555));
+
         int cc = count;
+
         if (cc > 999) cc = 999;
+
         Font.draw("" + cc, screen, x + 8, y, Color.get(-1, 444, 444, 444));
     }
 
@@ -48,13 +52,14 @@ public class ResourceItem extends Item {
     public boolean interactOn(Tile tile, Level level, int xt, int yt, Player player, int attackDir) {
         if (resource.interactOn(tile, level, xt, yt, player, attackDir)) {
             count--;
+
             return true;
         }
+
         return false;
     }
 
     public boolean isDepleted() {
         return count <= 0;
     }
-
 }

@@ -17,6 +17,7 @@ public class PlantableResource extends Resource {
 
     public PlantableResource(String name, int sprite, int color, Tile targetTile, List<Tile> sourceTiles) {
         super(name, sprite, color);
+
         this.sourceTiles = sourceTiles;
         this.targetTile = targetTile;
     }
@@ -24,8 +25,10 @@ public class PlantableResource extends Resource {
     public boolean interactOn(Tile tile, Level level, int xt, int yt, Player player, int attackDir) {
         if (sourceTiles.contains(tile)) {
             level.setTile(xt, yt, targetTile, 0);
+
             return true;
         }
+
         return false;
     }
 }

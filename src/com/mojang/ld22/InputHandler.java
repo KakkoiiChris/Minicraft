@@ -6,33 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class InputHandler implements KeyListener {
-    public class Key {
-        public int presses, absorbs;
-        public boolean down, clicked;
-
-        public Key() {
-            keys.add(this);
-        }
-
-        public void toggle(boolean pressed) {
-            if (pressed != down) {
-                down = pressed;
-            }
-            if (pressed) {
-                presses++;
-            }
-        }
-
-        public void tick() {
-            if (absorbs < presses) {
-                absorbs++;
-                clicked = true;
-            } else {
-                clicked = false;
-            }
-        }
-    }
-
     public List<Key> keys = new ArrayList<>();
 
     public Key up = new Key();
@@ -94,5 +67,35 @@ public class InputHandler implements KeyListener {
     }
 
     public void keyTyped(KeyEvent ke) {
+    }
+
+    public class Key {
+        public int presses, absorbs;
+        public boolean down, clicked;
+
+        public Key() {
+            keys.add(this);
+        }
+
+        public void toggle(boolean pressed) {
+            if (pressed != down) {
+                down = pressed;
+            }
+
+            if (pressed) {
+                presses++;
+            }
+        }
+
+        public void tick() {
+            if (absorbs < presses) {
+                absorbs++;
+
+                clicked = true;
+            }
+            else {
+                clicked = false;
+            }
+        }
     }
 }

@@ -13,6 +13,7 @@ import java.util.Random;
 @SuppressWarnings("ALL")
 public class Tile {
     public static int tickCount = 0;
+
     protected Random random = new Random();
 
     public static Tile[] tiles = new Tile[256];
@@ -49,7 +50,9 @@ public class Tile {
 
     public Tile(int id) {
         this.id = (byte) id;
+
         if (tiles[id] != null) throw new RuntimeException("Duplicate tile ids!");
+
         tiles[id] = this;
     }
 

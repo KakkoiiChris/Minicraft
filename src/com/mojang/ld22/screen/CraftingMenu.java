@@ -5,7 +5,6 @@ import com.mojang.ld22.entity.Player;
 import com.mojang.ld22.gfx.Color;
 import com.mojang.ld22.gfx.Font;
 import com.mojang.ld22.gfx.Screen;
-import com.mojang.ld22.item.Item;
 import com.mojang.ld22.item.ResourceItem;
 import com.mojang.ld22.sound.Sound;
 
@@ -22,7 +21,7 @@ public class CraftingMenu extends Menu {
         this.recipes = new ArrayList<>(recipes);
         this.player = player;
 
-        for (int i = 0; i < recipes.size(); i++) {
+        for (var i = 0; i < recipes.size(); i++) {
             this.recipes.get(i).checkCanCraft(player);
         }
 
@@ -39,20 +38,25 @@ public class CraftingMenu extends Menu {
         if (input.up.clicked) selected--;
         if (input.down.clicked) selected++;
 
-        int len = recipes.size();
+        var len = recipes.size();
+
         if (len == 0) selected = 0;
         if (selected < 0) selected += len;
         if (selected >= len) selected -= len;
 
         if (input.attack.clicked && len > 0) {
-            Recipe r = recipes.get(selected);
+            var r = recipes.get(selected);
+
             r.checkCanCraft(player);
+
             if (r.canCraft) {
                 r.deductCost(player);
                 r.craft(player);
+
                 Sound.craft.play();
             }
-            for (Recipe recipe : recipes) {
+
+            for (var recipe : recipes) {
                 recipe.checkCanCraft(player);
             }
         }
@@ -62,33 +66,47 @@ public class CraftingMenu extends Menu {
         Font.renderFrame(screen, "Have", 12, 1, 19, 3);
         Font.renderFrame(screen, "Cost", 12, 4, 19, 11);
         Font.renderFrame(screen, "Crafting", 0, 1, 11, 11);
+
         renderItemList(screen, 0, 1, 11, 11, recipes, selected);
 
         if (!recipes.isEmpty()) {
-            Recipe recipe = recipes.get(selected);
-            int hasResultItems = player.inventory.count(recipe.resultTemplate);
-            int xo = 13 * 8;
+            var recipe = recipes.get(selected);
+
+            var hasResultItems = player.inventory.count(recipe.resultTemplate);
+
+            var xo = 13 * 8;
+
             screen.render(xo, 2 * 8, recipe.resultTemplate.getSprite(), recipe.resultTemplate.getColor(), 0);
+
             Font.draw("" + hasResultItems, screen, xo + 8, 2 * 8, Color.get(-1, 555, 555, 555));
 
-            List<Item> costs = recipe.costs;
-            for (int i = 0; i < costs.size(); i++) {
-                Item item = costs.get(i);
-                int yo = (5 + i) * 8;
+            var costs = recipe.costs;
+
+            for (var i = 0; i < costs.size(); i++) {
+                var item = costs.get(i);
+
+                var yo = (5 + i) * 8;
+
                 screen.render(xo, yo, item.getSprite(), item.getColor(), 0);
-                int requiredAmt = 1;
-                if (item instanceof ResourceItem) {
-                    requiredAmt = ((ResourceItem) item).count;
+
+                var requiredAmt = 1;
+
+                if (item instanceof ResourceItem ri) {
+                    requiredAmt = ri.count;
                 }
-                int has = player.inventory.count(item);
-                int color = Color.get(-1, 555, 555, 555);
+
+                var has = player.inventory.count(item);
+
+                var color = Color.get(-1, 555, 555, 555);
+
                 if (has < requiredAmt) {
                     color = Color.get(-1, 222, 222, 222);
                 }
+
                 if (has > 99) has = 99;
-                Font.draw(requiredAmt + "/" + has, screen, xo + 8, yo, color);
+
+                Font.draw("%d/%d".formatted(requiredAmt, has), screen, xo + 8, yo, color);
             }
         }
-        // renderItemList(screen, 12, 4, 19, 11, recipes.get(selected).costs, -1);
     }
 }

@@ -11,8 +11,9 @@ public class WonMenu extends Menu {
     }
 
     public void tick() {
-        if (inputDelay > 0)
+        if (inputDelay > 0) {
             inputDelay--;
+        }
         else if (input.attack.clicked || input.menu.clicked) {
             game.setMenu(new TitleMenu());
         }
@@ -22,18 +23,16 @@ public class WonMenu extends Menu {
         Font.renderFrame(screen, "", 1, 3, 18, 9);
         Font.draw("You won! Yay!", screen, 2 * 8, 4 * 8, Color.get(-1, 555, 555, 555));
 
-        int seconds = game.gameTime / 60;
-        int minutes = seconds / 60;
-        int hours = minutes / 60;
+        var seconds = game.gameTime / 60;
+        var minutes = seconds / 60;
+        var hours = minutes / 60;
         minutes %= 60;
         seconds %= 60;
 
-        String timeString;
-        if (hours > 0) {
-            timeString = hours + "h" + (minutes < 10 ? "0" : "") + minutes + "m";
-        } else {
-            timeString = minutes + "m " + (seconds < 10 ? "0" : "") + seconds + "s";
-        }
+        var timeString = (hours > 0)
+            ? "%dh%s%dm".formatted(hours, minutes < 10 ? "0" : "", minutes)
+            : "%dm %s%ds".formatted(minutes, seconds < 10 ? "0" : "", seconds);
+
         Font.draw("Time:", screen, 2 * 8, 5 * 8, Color.get(-1, 555, 555, 555));
         Font.draw(timeString, screen, (2 + 5) * 8, 5 * 8, Color.get(-1, 550, 550, 550));
         Font.draw("Score:", screen, 2 * 8, 6 * 8, Color.get(-1, 555, 555, 555));

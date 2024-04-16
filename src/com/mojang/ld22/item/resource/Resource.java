@@ -5,7 +5,7 @@ import com.mojang.ld22.gfx.Color;
 import com.mojang.ld22.level.Level;
 import com.mojang.ld22.level.tile.Tile;
 
-@SuppressWarnings("StaticInitializerReferencesSubClass")
+@SuppressWarnings("ALL")
 public class Resource {
     public static Resource wood = new Resource("Wood", 1 + 4 * 32, Color.get(-1, 200, 531, 430));
     public static Resource stone = new Resource("Stone", 2 + 4 * 32, Color.get(-1, 111, 333, 555));
@@ -37,6 +37,7 @@ public class Resource {
 
     public Resource(String name, int sprite, int color) {
         if (name.length() > 6) throw new RuntimeException("Name cannot be longer than six characters!");
+
         this.name = name;
         this.sprite = sprite;
         this.color = color;

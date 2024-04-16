@@ -9,6 +9,7 @@ public class ResourceRecipe extends Recipe {
 
     public ResourceRecipe(Resource resource) {
         super(new ResourceItem(resource, 1));
+
         this.resource = resource;
     }
 

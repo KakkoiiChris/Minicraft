@@ -13,6 +13,7 @@ public class InventoryMenu extends Menu {
 
         if (player.activeItem != null) {
             player.inventory.items.add(0, player.activeItem);
+
             player.activeItem = null;
         }
     }
@@ -23,7 +24,8 @@ public class InventoryMenu extends Menu {
         if (input.up.clicked) selected--;
         if (input.down.clicked) selected++;
 
-        int len = player.inventory.items.size();
+        var len = player.inventory.items.size();
+
         if (len == 0) selected = 0;
         if (selected < 0) selected += len;
         if (selected >= len) selected -= len;
@@ -36,6 +38,7 @@ public class InventoryMenu extends Menu {
 
     public void render(Screen screen) {
         Font.renderFrame(screen, "inventory", 1, 1, 12, 11);
+
         renderItemList(screen, 1, 1, 12, 11, player.inventory.items, selected);
     }
 }

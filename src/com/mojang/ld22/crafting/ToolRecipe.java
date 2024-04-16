@@ -10,6 +10,7 @@ public class ToolRecipe extends Recipe {
 
     public ToolRecipe(ToolType type, int level) {
         super(new ToolItem(type, level));
+
         this.type = type;
         this.level = level;
     }

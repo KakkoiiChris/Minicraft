@@ -8,6 +8,7 @@ public class GameApplet extends Applet {
 
     public void init() {
         setLayout(new BorderLayout());
+
         add(game, BorderLayout.CENTER);
     }
 

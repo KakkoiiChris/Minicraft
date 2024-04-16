@@ -24,21 +24,25 @@ public class ContainerMenu extends Menu {
 
         if (input.left.clicked) {
             window = 0;
-            int tmp = selected;
+
+            var tmp = selected;
             selected = oSelected;
             oSelected = tmp;
         }
+
         if (input.right.clicked) {
             window = 1;
-            int tmp = selected;
+
+            var tmp = selected;
             selected = oSelected;
             oSelected = tmp;
         }
 
-        Inventory i = window == 1 ? player.inventory : container;
-        Inventory i2 = window == 0 ? player.inventory : container;
+        var i = window == 1 ? player.inventory : container;
+        var i2 = window == 0 ? player.inventory : container;
 
-        int len = i.items.size();
+        var len = i.items.size();
+
         if (selected < 0) selected = 0;
         if (selected >= len) selected = len - 1;
 
@@ -51,17 +55,20 @@ public class ContainerMenu extends Menu {
 
         if (input.attack.clicked && len > 0) {
             i2.add(oSelected, i.items.remove(selected));
+
             if (selected >= i.items.size()) selected = i.items.size() - 1;
         }
     }
 
     public void render(Screen screen) {
         if (window == 1) screen.setOffset(6 * 8, 0);
+
         Font.renderFrame(screen, title, 1, 1, 12, 11);
         renderItemList(screen, 1, 1, 12, 11, container.items, window == 0 ? selected : -oSelected - 1);
 
         Font.renderFrame(screen, "inventory", 13, 1, 13 + 11, 11);
         renderItemList(screen, 13, 1, 13 + 11, 11, player.inventory.items, window == 1 ? selected : -oSelected - 1);
+
         screen.setOffset(0, 0);
     }
 }

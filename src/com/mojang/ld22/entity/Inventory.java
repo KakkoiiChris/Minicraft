@@ -16,51 +16,64 @@ public class Inventory {
 
     public void add(int slot, Item item) {
         if (item instanceof ResourceItem toTake) {
-            ResourceItem has = findResource(toTake.resource);
+            var has = findResource(toTake.resource);
+
             if (has == null) {
                 items.add(slot, toTake);
-            } else {
+            }
+            else {
                 has.count += toTake.count;
             }
-        } else {
+        }
+        else {
             items.add(slot, item);
         }
     }
 
     private ResourceItem findResource(Resource resource) {
-        for (Item item : items) {
+        for (var item : items) {
             if (item instanceof ResourceItem has) {
                 if (has.resource == resource) return has;
             }
         }
+
         return null;
     }
 
     public boolean hasResources(Resource r, int count) {
-        ResourceItem ri = findResource(r);
-        if (ri == null) return false;
-        return ri.count >= count;
+        var ri = findResource(r);
+
+        return ri != null && ri.count >= count;
     }
 
     public void removeResource(Resource r, int count) {
-        ResourceItem ri = findResource(r);
+        var ri = findResource(r);
+
         if (ri == null) return;
+
         if (ri.count < count) return;
+
         ri.count -= count;
+
         if (ri.count <= 0) items.remove(ri);
     }
 
     public int count(Item item) {
-        if (item instanceof ResourceItem) {
-            ResourceItem ri = findResource(((ResourceItem) item).resource);
+        if (item instanceof ResourceItem r) {
+            var ri = findResource(r.resource);
+
             if (ri != null) return ri.count;
-        } else {
-            int count = 0;
-            for (Item value : items) {
+        }
+        else {
+            var count = 0;
+
+            for (var value : items) {
                 if (value.matches(item)) count++;
             }
+
             return count;
         }
+
         return 0;
     }
 }

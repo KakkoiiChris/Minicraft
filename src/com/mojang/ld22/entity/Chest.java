@@ -8,12 +8,15 @@ public class Chest extends Furniture {
 
     public Chest() {
         super("Chest");
+
         col = Color.get(-1, 110, 331, 552);
         sprite = 1;
     }
 
+    @Override
     public boolean use(Player player, int attackDir) {
         player.game.setMenu(new ContainerMenu(player, "Chest", inventory));
+
         return true;
     }
 }
